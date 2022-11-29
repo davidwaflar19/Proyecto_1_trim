@@ -8,3 +8,6 @@ Vamos a instalar un servidor web interno para un instituto. Se Pide:
 - Adicionalmente protegeremos el acceso a la aplicación python mediante autenticación
 - Instala y configura awstat.
 - Instala un segundo servidor de tu elección (nginx, lighttpd) bajo el dominio “servidor2.centro.intranet”. Debes configurarlo para que sirva en el puerto 8080 y haz los cambios necesarios para ejecutar php. Instala phpmyadmin.
+
+## [Servidor con wordpress ](/Wordpress.md)
+Aquí enseño los pasos necesarios para instalar wordpress en un servidor de apache
