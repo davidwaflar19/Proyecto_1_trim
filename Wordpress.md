@@ -28,4 +28,23 @@ Ahora para conocer la IP del localhost escribimos:
 $ cd/etc 
 $ nano hosts
 ```
+![image](https://user-images.githubusercontent.com/91255833/204737333-a7a19de9-be37-4925-815b-f9a58aa6e79d.png)
+
+Para ver que funciona vamos a firefox y ponemos
+```bash
+http://ip_localhost
+```
+![image](https://user-images.githubusercontent.com/91255833/204737815-07c96a04-d300-4a9d-9a66-8d4f9884a93d.png)
+
+Ahora tenemos que crear el directorio de centro.intranet dentro del directorio /www
+```bash
+$ mkdir /var/www/centro.intranet
+$ ls /var/www
+```
+![image](https://user-images.githubusercontent.com/91255833/204739021-24b2e3f7-1ae1-439b-b8d9-61fc8fea267d.png)
+
+Y le ponemos una ip a centro.intranet por el archivo hosts como antes
+![image](https://user-images.githubusercontent.com/91255833/204739599-e6d3d819-7865-4bd1-886f-66d2e070d50e.png)
+
+
 
