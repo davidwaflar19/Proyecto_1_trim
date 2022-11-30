@@ -44,6 +44,7 @@ $ ls /var/www
 ![image](https://user-images.githubusercontent.com/91255833/204739021-24b2e3f7-1ae1-439b-b8d9-61fc8fea267d.png)
 
 Y le ponemos una ip a centro.intranet por el archivo hosts como antes
+
 ![image](https://user-images.githubusercontent.com/91255833/204739599-e6d3d819-7865-4bd1-886f-66d2e070d50e.png)
 
 
