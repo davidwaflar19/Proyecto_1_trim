@@ -111,7 +111,9 @@ Ahora asignamos a www.centro.intranet la misma IP que centro.intranet editando e
 ![image](https://user-images.githubusercontent.com/91255833/205369620-93a9f9e4-35d7-442d-940c-503f4fc12a92.png)
 
 Para poder ver algo creamos un archivo básico de HTML en /var/www/centro.intranet
+
 ![image](https://user-images.githubusercontent.com/91255833/205370829-c5e1158b-775e-461e-bb43-d1e5827834cd.png)
+
 ![image](https://user-images.githubusercontent.com/91255833/205370994-7b332d22-9df5-4484-b243-05882f2d0241.png)
 
 
