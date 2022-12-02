@@ -116,4 +116,37 @@ Para poder ver algo creamos un archivo básico de HTML en /var/www/centro.intran
 
 ![image](https://user-images.githubusercontent.com/91255833/205370994-7b332d22-9df5-4484-b243-05882f2d0241.png)
 
+Ya con el virtual host hecho solo nos queda instalar wordpress, para ello cojemos el archivo .zip, lo descomprimimos y lo copiamos en la carpeta /var/www/centro.intranet
+
+![image](https://user-images.githubusercontent.com/91255833/205399415-7291ff7f-80e0-492a-abf5-69b3c668b585.png)
+
+Ahora extraemos el contenido de la carpeta y lo sacamos a centro.intranet
+![image](https://user-images.githubusercontent.com/91255833/205400471-d4759d30-1972-4cac-967d-1051cef18d2d.png)
+![image](https://user-images.githubusercontent.com/91255833/205400355-774791e4-0a9c-4cd5-9305-691435339452.png)
+Ahora cambiamos los permisos del directorio centro.intranet:
+```bash 
+$ chown -R www-data:www-data centro.intranet
+$ ls -l
+```
+![image](https://user-images.githubusercontent.com/91255833/205400776-c72d6d85-5cdc-4a73-872f-33ec6fd93016.png)
+
+Ahora vamos a crear una base de datos en mysql para wordpress:
+```bash
+$ mysql -u root -p
+```
+```sql
+$ create database worpdress;
+```
+```sql
+$ create user 'wordpressuser'@'localhost' identified by 'wordpressuser';
+$ grant all privileges on wordpress*. to 'wordpressuser'@'localhost';
+```
+Con esto ya podemos buscar en nustro centro.intranet en un navegador y nos sale lo siguiente:
+![image](https://user-images.githubusercontent.com/91255833/205401579-92447244-43a4-44b1-82e3-e0032cb27a79.png)
+
+Por ultimo ponemos las credenciales que antes hemos creado:
+![image](https://user-images.githubusercontent.com/91255833/205401707-246807a1-8b0a-46f8-bc8e-9ae6c311dd17.png)
+![image](https://user-images.githubusercontent.com/91255763/204496944-90338a2f-42ce-4998-bbf3-7db739ea8492.png)
+![image](https://user-images.githubusercontent.com/91255763/204497058-ff8714e8-4ee5-407f-8fb6-0705e2314dd4.png)
+
 
