@@ -11,3 +11,5 @@ Vamos a instalar un servidor web interno para un instituto. Se Pide:
 
 ## [Servidor con wordpress ](/Wordpress.md)
 Aquí enseño los pasos necesarios para instalar wordpress en un servidor de apache
+## [Servidor con python ](/Python.md)
+Aquí tenemos las instrucciones y pasos necesarios para montar un servidor de apache que sirva a traves de una aplicacion de python
