@@ -67,4 +67,16 @@ Ahora creo un index.html para ver algo:
 </html>
 ```
 ## Configuracion de puerto de acceso y bloques de nginx
+Para hacer que nginx reciba por el puerto 8080 debemos modificar el fichero de configuración de nginx con el siguiente comando:
+```bash
+$ sudo nano /etc/nginx/sites-available/servidor2.centro.intranet
+```
+Modificamos listen 80 y listen [::]:80 default_server por listen 8080 y listen [::]:8080 default_server:
 
+![image](https://user-images.githubusercontent.com/91255763/205137228-5191d86f-d234-47fa-bdd0-6d17a4bdf0f4.png)
+
+Despues de configurar el puerto debemos habilitar el archivo creando un enlace desde el mismo al directorio sites-enabled (habilitado para sitios), el cual Nginx usa para leer durante el inicio:
+
+```bash
+$ sudo ln -s sudo ln -s /etc/nginx/sites-available/servidor2.centro.intranet /etc/nginx/sites-enabled/
+```
