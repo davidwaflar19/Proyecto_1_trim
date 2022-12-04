@@ -80,3 +80,15 @@ Despues de configurar el puerto debemos habilitar el archivo creando un enlace d
 ```bash
 $ sudo ln -s sudo ln -s /etc/nginx/sites-available/servidor2.centro.intranet /etc/nginx/sites-enabled/
 ```
+## Instalar mysql
+para isntalar mysql
+```bash
+$ sudo apt install mysql-server
+```
+Debemos cambiar la contraseña de root 
+```bash
+$ sudo mysql
+```
+```sql
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+```
