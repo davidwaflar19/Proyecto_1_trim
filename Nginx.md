@@ -111,5 +111,96 @@ $ sudo mysql_secure_installation
 ```
 ![image](https://user-images.githubusercontent.com/91255833/205503558-876d90d4-2429-44cb-96f3-4845af0b2a55.png)
 
+## Instalar PHP
+Dado que Nginx no contiene procesamiento de PHP nativo como otros servidores web, tenemos que instalar php-fpm, que significa “administrador de procesos de fastCGI”. Indicaremos a Nginx que transmita solicitudes de PHP a este software para su procesamiento.
+```bash
+$ sudo add-apt-repository universe
+```
+Instalamos el módulo php-fpm junto con un paquete auxiliar adicional, php-mysql, que permitirá a PHP comunicarse con el backend de su base de datos.
+```bash
+$ sudo apt install php-fpm php-mysql
+```
+Con esto, habremos instalado todos los componentes requeridos de la pila LEMP, pero aún tenemos que realizar algunos cambios en la configuración para indicar a Nginx que utilice el procesador PHP para contenido dinámico.
+Para hacerlo, abrimos un nuevo archivo de configuración de bloques de servidor dentro del directorio /etc/nginx/sites-available/.
+```bash
+$ sudo nano /etc/nginx/sites-available/servidor2.centro.intranet
+```
+Agregamos el siguiente contenido, tomado y modificado ligeramente a partir del archivo de configuración predeterminado de bloques de servidor, a su nuevo archivo de configuración de bloques de servidor otra vez:
+```nginx
+server {
+        listen 80;
+        root /var/www/servidor2.centro.intranet/html;
+        index index.html index.htm index.nginx-debian.html;
+        server_name servidor2.centro.intranet www.servidor2.centro.intranet;
+        location / {
+                try_files $uri $uri/ =404;
+        }
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+}
+```
+## Crear un archivo PHP para comprobar
+Nuestra pila LEMP ahora debería estar configurada por completo. Podemos probarla para validar la ejecución correcta de archivos .php a partir del procesador PHP por parte de Nginx.
+Para ello creamos un archivo php que se llama info.php:
+```bash
+$ sudo nano /var/www/servidor2.centro.intranet/html/info.php
+```
+Intoducimos lo siguiente que hará que el servidor muestre información:
+```php
+<?php
+phpinfo();
+```
+Ahora en un navegador buscamos la ip de nuestro servidor terminado de /info.php y nos saldrá algo parecido a esto:
+![image](https://user-images.githubusercontent.com/91255833/205504201-1ff0c109-c9b0-4dd1-a069-bc916c3b2115.png)
+
+## Instalación de PhpMyadmin
+De manera predeterminada, el repositorio de Ubuntu viene con phpMyAdmin y las dependencias requeridas. Sin embargo, como ocurre a menudo con las versiones de Ubuntu LTS, la versión y la compilación están muy atrasadas.
+Para ello instalaremos la última versión:
+```bash
+DATA="$(wget https://www.phpmyadmin.net/home_page/version.txt -q -O-)"
+URL="$(echo $DATA | cut -d ' ' -f 3)"
+VERSION="$(echo $DATA | cut -d ' ' -f 1)"
+wget https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}-all-languages.tar.gz
+https://es.linuxcapable.com/how-to-install-phpmyadmin-with-lemp-on-ubuntu-22-04-lts/#Install_phpMyAdmin
+```
+Ahora extraemos el archivo:
+```bash
+$ tar xvf phpmyadmin-${VERSION}-all-languages.tar.gz
+```
+## Configurar PhpMyadmin
+El primer paso es mover todos los archivos a /var/www, hemos utilizado el comando mv:
+```bash
+$ sudo mv phpMyAdmin/ /var/www/phpmyadmin 
+```
+Por defecto PhpMyadmin no tiene un archivo tmp, así que lo tenemos que crear:
+```bash
+$ sudo mkdir -p /var/www/phpmyadmin/tmp
+```
+En el directorio phpMyAdmin, se incluye un archivo de ejemplo de configuración predeterminado. Tenemos que cambiar el nombre de este archivo para que phpMyAdmin reconozca la configuración.
+Sin embargo, para la copia de seguridad, utilizará el comando CP para crear una copia y mantener el valor predeterminado como copia de seguridad si se comete algún error en la ubicación /var/www/phpmyadmin/ .
+Copiamos config.muestra.inc.php a config.inc.php con el siguiente comando:
+```bash
+$ sudo cp /var/www/phpmyadmin/config.sample.inc.php /var/www/phpmyadmin/config.inc.php
+```
+Despues abrimos el documento, phpMyAdmin usa un Cifrado de pez globo. Nos vamos hasta la línea que comienza con:
+```php
+$ cfg ['blowfish_secret'].
+```
+Las líneas se verán como:
+```php
+$cfg['blowfish_secret'] = ''; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
+```
+Tenemos que asignar una cadena de 32 caracteres aleatorios entre las comillas simples. La forma más sencilla de lograrlo es utilizando el programa pwgen. Instalamos pwgen con el siguiente comando:
+```bash
+$ sudo apt install pwgen -y
+```
+
+
+
+
+
+
 
 
