@@ -196,10 +196,63 @@ Tenemos que asignar una cadena de 32 caracteres aleatorios entre las comillas si
 ```bash
 $ sudo apt install pwgen -y
 ```
+Una vez instalado:
+```pwgen
+pwgen -S 32 1
+```
+Luego obtenemos la cadena aleatoria de 32 caracteres:
+![image](https://user-images.githubusercontent.com/91255763/205367912-1df7fffe-9698-49c2-855a-0c1f17fe3559.png)
 
+## Bloque nginx para PhpMyadmin
 
-
-
+Para acceder a la interfaz web de phpMyAdmin, debemos crear un bloque de servidor Nginx. Se recomienda encarecidamente mantener esto separado, y en un subdominio, puede nombrarlo como desee para ayudar con la seguridad y los ataques de fuerza bruta.
+Primero abrimos nuestro bloque de servidor usando nano:
+```bash 
+$ sudo nano /etc/nginx/sites-available/phpmyadmin.conf
+```
+```nginx
+server {
+  listen 80;
+  listen [::]:80;
+  server_name pma.servidor2.intranet;
+  root /var/www/phpmyadmin/;
+  index index.php index.html index.htm index.nginx-debian.html;
+  access_log /var/log/nginx/phpmyadmin_access.log;
+  error_log /var/log/nginx/phpmyadmin_error.log;
+  location / {
+    try_files $uri $uri/ /index.php;
+  }
+  location ~ ^/(doc|sql|setup)/ {
+    deny all;
+  
+  location ~ \.php$ {
+    fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+    include snippets/fastcgi-php.conf;
+  }
+  location ~ /\.ht {
+    deny all;
+  }
+}
+```
+Ahora, creamos un enlace simbólico desde sitios disponibles donde está contenido el archivo de configuración para vincular entonces sitios habilitados.
+```bash
+$ sudo ln -s /etc/nginx/sites-available/phpmyadmin.conf /etc/nginx/sites-enabled/
+```
+Antes de reiniciar el servicio Nginx, siempre realizamos una prueba de ejecución en seco, especialmente en entornos activos, para asegurarnos de que el bloqueo del servidor o cualquier cambio que se haya realizado en los archivos de configuración no provoquen errores en Nginx.
+```bash
+$ sudo nginx -t
+```
+Ahora ponemos en el fichero hosts la misma ip que pusimos en el fichero config.inc.php y reiniciamos nginx:
+```bash 
+$ sudo nano /etc/hosts
+```
+```bash
+$ sudo systemctl restart nginx
+```
+Ahora podemos ver la interfaz accediendo al navegador y escribimos la IP, nos quedará tal que así:
+![image](https://user-images.githubusercontent.com/91255833/205508830-ee78f1f3-fc06-4f4b-93fa-3ca99bf71b8e.png)
 
 
 
