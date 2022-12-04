@@ -92,3 +92,24 @@ $ sudo mysql
 ```sql
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
+La password corresponde a una contraseña alfanumerica, si ejecutamos el comando FLUSH PRIVILEGES, el servidor vuelve a cargar la tabla de permisos y aplica los nuevos cambios:
+```sql
+mysql> FLUSH PRIVILEGES;
+```
+![image](https://user-images.githubusercontent.com/91255763/205155740-3156189d-8533-4508-9150-a9ce6cdba526.png)
+
+Podemos ver en este ejemplo que el usuario root de MYSQL ahora se autentica utilizando una contraseña. una vez que confirmemos esto, podemos salir del shell de mysql.
+-Importante: Despues de configurar root ya no podremos utilizar sudo mysql. En su lugar utilizaremos lo siguiente:
+```bash
+$ mysql  -u root -p
+```
+Una vez que pongamos la contraseña, podremos ver la línea de comandos de mysql.
+Al instalar Mysql La mayoría de los estándares consideran que las configuraciones predeterminadas nuevas son débiles y causan preocupación por permitir potencialmente la intrusión o la explotación de piratas informáticos. Una solución es ejecutar el script de seguridad de instalación.
+Primero, usamos el siguiente comando para iniciar el (mysql_secure_installation):
+```bash
+$ sudo mysql_secure_installation
+```
+![image](https://user-images.githubusercontent.com/91255833/205503558-876d90d4-2429-44cb-96f3-4845af0b2a55.png)
+
+
+
